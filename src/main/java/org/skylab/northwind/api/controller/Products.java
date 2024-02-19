@@ -2,6 +2,7 @@ package org.skylab.northwind.api.controller;
 
 import org.skylab.northwind.business.abstracts.ProductService;
 import org.skylab.northwind.entities.concretes.Product;
+import org.skylab.northwind.entities.concretes.dtos.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/product")
 public class Products {
-
 
     private ProductService productService;
 
@@ -33,8 +33,8 @@ public class Products {
     }
 
     @RequestMapping("create")
-    public void add(@RequestBody Product product){
-        productService.Add(product);
+    public void add(@RequestBody ProductDto productDto){
+        productService.Add(productDto);
     }
 
     @RequestMapping("/getbySupplierId")

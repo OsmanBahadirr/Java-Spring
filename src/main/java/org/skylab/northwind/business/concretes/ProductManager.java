@@ -1,8 +1,10 @@
 package org.skylab.northwind.business.concretes;
 
+import org.skylab.northwind.business.abstracts.CategoryService;
 import org.skylab.northwind.business.abstracts.ProductService;
 import org.skylab.northwind.dataAccess.abstracts.ProductDao;
 import org.skylab.northwind.entities.concretes.Product;
+import org.skylab.northwind.entities.concretes.dtos.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,12 @@ public class ProductManager implements ProductService {
 
     private ProductDao productDao;
 
+    private CategoryService categoryService;
+
     @Autowired
-    public ProductManager(ProductDao productDao){
+    public ProductManager(ProductDao productDao, CategoryService categoryService){
         this.productDao = productDao;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -31,9 +36,19 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public void Add(Product product) {
+    public void Add(ProductDto productDto) {
+
+        Product product = new Product().builder()
+                .name(productDto.getName())
+                .supplierId(productDto.getSupplierId())
+                .unitPrice(productDto.getUnitPrice())
+                .unitsInStock(productDto.getUnitsInStock())
+                .category(categoryService.getById(productDto.getCategoryId())).build();
+
         productDao.save(product);
-    }
+
+
+}
 
     @Override
     public List<Product> getBySupplierId(int id) {

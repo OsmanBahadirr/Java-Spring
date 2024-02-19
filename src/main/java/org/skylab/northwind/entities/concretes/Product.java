@@ -3,12 +3,14 @@ package org.skylab.northwind.entities.concretes;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "products")
 public class Product {
@@ -24,8 +26,11 @@ public class Product {
     @Column(name = "supplier_id")
     private int supplierId;
 
-    @Column(name = "category_id")
-    private int categoryId;
+
+    @ManyToOne()
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
 
     @Column(name = "unit_price")
     private double unitPrice;
@@ -36,6 +41,7 @@ public class Product {
     @Column(name = "units_in_stock")
     private int unitsInStock;
 
+    /*
     @Column(name = "units_on_order")
     private int unitsOnOrder;
 
@@ -44,6 +50,8 @@ public class Product {
 
     @Column(name = "discontinued")
     private int discontinued;
+
+     */
 
 
 }
